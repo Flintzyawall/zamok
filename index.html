@@ -3,83 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>замок любви | открой сердце</title>
+    <title>замок любви | сердце говорит</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none; /* предотвращает случайное выделение на телефоне */
+            user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
             min-height: 100vh;
-            background: radial-gradient(circle at 20% 30%, #1f2c2b, #0f171b);
+            background: radial-gradient(circle at 30% 20%, #1e2a2c, #0a0f12);
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Segoe UI', 'Poppins', 'Quicksand', system-ui, -apple-system, sans-serif;
             padding: 16px;
-            touch-action: manipulation; /* улучшает отклик тапов */
+            touch-action: manipulation;
         }
 
         .app-container {
             position: relative;
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
             margin: auto;
         }
 
-        /* ГЛАВНАЯ ПАНЕЛЬ С ЗАМКОМ */
+        /* панель замка */
         .lock-panel {
-            background: rgba(28, 22, 18, 0.92);
-            backdrop-filter: blur(6px);
+            background: rgba(28, 22, 18, 0.94);
+            backdrop-filter: blur(8px);
             border-radius: 64px;
-            padding: 1.7rem 1.2rem 2rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 215, 150, 0.2);
-            border: 1px solid rgba(210, 170, 110, 0.6);
+            padding: 1.6rem 1.2rem 1.8rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 210, 130, 0.2);
+            border: 1px solid rgba(210, 170, 110, 0.7);
             transition: opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.5s ease;
         }
 
         .lock-panel.hidden {
             opacity: 0;
             visibility: hidden;
-            transform: scale(0.92) translateY(8px);
+            transform: scale(0.92) translateY(10px);
             pointer-events: none;
         }
 
         .lock-header {
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .lock-icon {
-            font-size: 3.4rem;
-            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.5));
+            font-size: 3.2rem;
+            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.4));
         }
 
         .lock-title {
             color: #ffefcf;
             font-weight: 600;
             letter-spacing: 1.5px;
-            font-size: 1rem;
+            font-size: 0.85rem;
             background: #2f221bb3;
             display: inline-block;
-            padding: 5px 18px;
+            padding: 5px 16px;
             border-radius: 100px;
             backdrop-filter: blur(4px);
             margin-top: 6px;
-            font-size: 0.9rem;
         }
 
-        /* ЦИФРОВОЙ КОД (3 слота) */
+        /* цифровой код (слоты) */
         .digit-code {
             display: flex;
             justify-content: center;
             gap: 20px;
             margin: 20px 0 24px;
-            flex-wrap: nowrap;
         }
 
         .digit-slot {
@@ -92,16 +90,15 @@
             justify-content: center;
             font-size: 3.8rem;
             font-weight: 800;
-            font-family: 'Courier New', 'Fira Mono', monospace;
+            font-family: 'Courier New', monospace;
             color: #ffd58c;
-            text-shadow: 0 0 5px #ff964f;
+            text-shadow: 0 0 6px #ff964f;
             box-shadow: inset 0 2px 6px rgba(0,0,0,0.7), 0 8px 12px rgba(0,0,0,0.4);
             border-bottom: 3px solid #cb9e62;
             background: #1f1913;
-            transition: transform 0.08s linear;
         }
 
-        /* КЛАВИАТУРА 3x3 + 0 */
+        /* клавиатура */
         .keypad {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -150,12 +147,10 @@
             transition: 0.08s linear;
             box-shadow: 0 3px 6px rgba(0,0,0,0.3);
             touch-action: manipulation;
-            letter-spacing: 0.5px;
         }
 
         .btn:active {
             transform: scale(0.96);
-            background: #6f4f36;
         }
 
         .status-msg {
@@ -168,21 +163,20 @@
             border-radius: 80px;
             font-size: 0.8rem;
             backdrop-filter: blur(2px);
-            letter-spacing: 0.4px;
         }
 
-        /* ЭКРАН С ПАРЯЩИМИ СЕРДЦАМИ (FULLSCREEN LOVE) */
+        /* ЭКРАН ЛЮБВИ: большое сердце + четкая надпись */
         .hearts-canvas-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, #2b141f, #050103);
+            background: radial-gradient(ellipse at center, #2d1623, #040103);
             z-index: 2000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 1.2s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            transition: opacity 1.2s ease;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -204,7 +198,6 @@
             object-fit: cover;
         }
 
-        /* НИЖНЯЯ ПОДПИСЬ В ЭФИРЕ ЛЮБВИ */
         .info-love {
             position: absolute;
             bottom: 35px;
@@ -223,20 +216,16 @@
             width: fit-content;
             margin: 0 auto;
             backdrop-filter: blur(16px);
-            letter-spacing: 0.8px;
+            letter-spacing: 1px;
             white-space: nowrap;
         }
 
-        /* адаптив для узких телефонов */
-        @media (max-width: 480px) {
-            body {
-                padding: 12px;
-            }
+        /* адаптив для телефонов: сердечная панель крупнее и надпись читабельна */
+        @media (max-width: 550px) {
             .digit-slot {
                 width: 70px;
                 height: 82px;
                 font-size: 3rem;
-                border-radius: 28px;
             }
             .key {
                 font-size: 1.7rem;
@@ -250,21 +239,13 @@
                 padding: 6px 16px;
                 font-size: 0.8rem;
             }
-            .lock-title {
-                font-size: 0.8rem;
-            }
-            .status-msg {
-                font-size: 0.7rem;
-            }
             .info-love {
                 font-size: 13px;
-                white-space: nowrap;
                 bottom: 20px;
-                padding: 6px 18px;
+                white-space: nowrap;
             }
         }
-        
-        @media (max-width: 380px) {
+        @media (max-width: 400px) {
             .digit-slot {
                 width: 60px;
                 height: 72px;
@@ -273,11 +254,8 @@
             .digit-code {
                 gap: 12px;
             }
-            .key {
-                font-size: 1.5rem;
-            }
         }
-        /* небольшой эффект дрожания при ошибке */
+
         .shake-error {
             animation: shakeBox 0.12s ease-in-out 0s 2;
         }
@@ -306,20 +284,17 @@
             <button class="btn" id="clearBtn">🗝️ СБРОС</button>
             <button class="btn" id="unlockBtn">💖 ОТКРЫТЬ</button>
         </div>
-        <div class="status-msg" id="statusMsg">
-            🔢 введи код 1 7 2
-        </div>
+        <div class="status-msg" id="statusMsg">🔢 введи код 1 7 2</div>
     </div>
 </div>
 
 <div id="heartsStage" class="hearts-canvas-container">
-    <canvas id="heartCanvas" width="1000" height="800"></canvas>
-    <div class="info-love" id="stageMessage">💞 сердце наполняется нежностью... 💞</div>
+    <canvas id="heartCanvas"></canvas>
+    <div class="info-love" id="stageMessage">💗 сердце наполняется нежностью... 💗</div>
 </div>
 
 <script>
     (function() {
-        // СЕКРЕТНЫЙ КОД (число любви)
         const SECRET_CODE = "172";
         let enteredCode = "";
         
@@ -332,7 +307,6 @@
         const lockPanel = document.getElementById("lockPanel");
         const heartsContainer = document.getElementById("heartsStage");
         
-        // обновить визуал цифр
         function updateDigitsUI() {
             let padded = enteredCode.padEnd(3, "0");
             for(let i = 0; i < 3; i++) {
@@ -340,7 +314,6 @@
             }
         }
         
-        // добавить цифру (совместимость с тапами телефона)
         function addDigit(num) {
             if(enteredCode.length >= 3) {
                 statusDiv.innerText = "❌ максимум 3 цифры, нажми СБРОС";
@@ -358,18 +331,16 @@
         function resetCode() {
             enteredCode = "";
             updateDigitsUI();
-            statusDiv.innerText = "✨ сброшено  ✨";
+            statusDiv.innerText = "✨ сброшено ✨";
         }
         
-        // визуальная ошибка + лёгкая тряска
         function wrongCodeAnimation() {
             const slots = document.querySelectorAll('.digit-slot');
             slots.forEach(slot => {
                 slot.classList.add('shake-error');
                 setTimeout(() => slot.classList.remove('shake-error'), 300);
             });
-            // также кратковременное изменение статуса
-            statusDiv.innerText = "❌ неверно!❌";
+            statusDiv.innerText = "❌ неверно!  ❌";
             setTimeout(() => {
                 if(enteredCode.length === 0) statusDiv.innerText = "✨ введи код любви ✨";
                 else statusDiv.innerText = `⭐ код: ${enteredCode.padEnd(3,'_')}`;
@@ -378,268 +349,293 @@
         
         function tryUnlock() {
             if(enteredCode.length !== 3) {
-                statusDiv.innerText = "⚠️ введи ровно 3 цифры";
-                wrongCodeAnimation(); // лёгкая подсказка
+                statusDiv.innerText = "⚠️ введи 3 цифры";
+                wrongCodeAnimation();
                 return;
             }
             if(enteredCode === SECRET_CODE) {
                 statusDiv.innerText = "❤️ КОД ВЕРЕН! ЗАМОК РАСТАЯЛ В ЛЮБВИ... ❤️";
-                // скрываем панель замка и показываем волшебную анимацию сердца
                 lockPanel.classList.add("hidden");
                 heartsContainer.classList.add("active");
-                startHeartMagicAnimation();
+                startLoveAnimationWithBigHeartAndText();
             } else {
                 wrongCodeAnimation();
-                resetCode();  // автосброс для удобства на телефоне
+                resetCode();
             }
         }
         
-        // ---------- АНИМАЦИЯ СЕРДЕЦ : ТЫСЯЧИ МЕРЦАЮЩИХ СЕРДЕЦ, НАДПИСЬ i love you ОГРОМНАЯ И НЕЖНАЯ ----------
-        let animFrame = null;
-        let particleArray = [];
-        let animationStartTime = 0;
-        const ANIM_DURATION = 11000; // 11 секунд для полного формирования
+        // ----- НОВАЯ АНИМАЦИЯ: БОЛЬШОЕ СЕРДЦЕ + ЧЁТКАЯ НАДПИСЬ "i love you" -----
+        let animationFrame = null;
+        let particles = [];
+        let animStartTime = 0;
+        const ANIM_DURATION = 10000; // 10 секунд на сборку
         
-        function startHeartMagicAnimation() {
-            if(animFrame) cancelAnimationFrame(animFrame);
+        function startLoveAnimationWithBigHeartAndText() {
+            if(animationFrame) cancelAnimationFrame(animationFrame);
             const canvas = document.getElementById("heartCanvas");
             if(!canvas) return;
             const ctx = canvas.getContext("2d");
             
-            // ресайз под каждое устройство
-            function resizeCanvasToWindow() {
+            function resizeCanvas() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                if(particleArray.length) generateTargetPoints(canvas);
+                if(particles.length) generateTargets(canvas);
             }
             window.addEventListener('resize', () => {
-                resizeCanvasToWindow();
-                if(particleArray.length) generateTargetPoints(canvas);
+                resizeCanvas();
+                if(particles.length) generateTargets(canvas);
             });
-            resizeCanvasToWindow();
+            resizeCanvas();
             
-            // ГЕНЕРАЦИЯ ЦЕЛЕВЫХ ТОЧЕК: гигантская надпись "i love you" + изящный контур сердца (фон)
-            function generateTargetPoints(canvas) {
+            // ГЕНЕРАЦИЯ: БОЛЬШУЩЕЕ СЕРДЦЕ (увеличено) + в центре гигантская надпись "i love you" из отдельных частиц, но выглядит как текст
+            function generateTargets(canvas) {
                 const w = canvas.width;
                 const h = canvas.height;
                 const centerX = w / 2;
-                const centerY = h / 2.3;  // чуть выше для фокуса на надпись
-                const heartScale = Math.min(w, h) * 0.45;
+                const centerY = h / 2.2;   // чуть выше, чтобы сердце было крупным и надпись в центре
+                // УВЕЛИЧИВАЕМ СЕРДЦЕ — используем большой масштаб (на телефоне будет занимать почти весь экран)
+                const heartScale = Math.min(w, h) * 0.56;  // крупное сердце
                 
-                // --- 1. Контур сердца (нежный, добавим объём)
-                function heartFormulaPoint(t, scale, offX, offY, invertY = true) {
-                    // классическое сердце: x = 16*sin^3 t , y = 13cos(t) - 5 cos(2t) - 2cos(3t) - cos(4t)
+                // 1) КОНТУР СЕРДЦА (массив точек для фона, чтобы создать форму)
+                function heartCurve(t, scale, offX, offY, flipY = true) {
                     let xRaw = 16 * Math.pow(Math.sin(t), 3);
                     let yRaw = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t);
-                    if(invertY) yRaw = -yRaw; // чтобы сердце стояло правильно (остриём вниз)
+                    if(flipY) yRaw = -yRaw;  // остриё вниз
                     let px = offX + xRaw * scale;
                     let py = offY + yRaw * scale * 0.9;
                     return { x: px, y: py };
                 }
                 
-                let heartContourPoints = [];
-                for(let i = 0; i <= 520; i++) {
-                    let t = (i / 520) * Math.PI * 2;
-                    let pt = heartFormulaPoint(t, heartScale / 18.5, centerX, centerY, true);
-                    heartContourPoints.push(pt);
+                let heartContour = [];
+                for(let i = 0; i <= 600; i++) {
+                    let t = (i / 600) * Math.PI * 2;
+                    let pt = heartCurve(t, heartScale / 17.5, centerX, centerY, true);
+                    heartContour.push(pt);
                 }
-                // добавим внутренней пульсации вокруг контура
-                for(let i = 0; i < 1800; i++) {
-                    let base = heartContourPoints[Math.floor(Math.random() * heartContourPoints.length)];
+                // утолщаем контур для объёма (но остаётся фоном)
+                for(let i=0; i<2500; i++) {
+                    let base = heartContour[Math.floor(Math.random() * heartContour.length)];
                     let angle = Math.random() * Math.PI * 2;
-                    let radius = 4 + Math.random() * 12;
-                    heartContourPoints.push({
-                        x: base.x + Math.cos(angle) * radius,
-                        y: base.y + Math.sin(angle) * radius
-                    });
+                    let r = 3 + Math.random() * 12;
+                    heartContour.push({ x: base.x + Math.cos(angle)*r, y: base.y + Math.sin(angle)*r });
                 }
                 
-                // --- 2. ГЛАВНАЯ НАДПИСЬ "i love you" — ЯРКАЯ, ЧЁТКАЯ, ЗАНИМАЕТ ЦЕНТР, БОЛЬШАЯ, но не задыхается на телефоне
-                // Создадим виртуальный canvas для текста, чтобы извлечь плотную карту пикселей
+                // 2) ГЛАВНОЕ: НАДПИСЬ "i love you"  —  БОЛЬШАЯ, ЧЁТКАЯ, ВНУТРИ СЕРДЦА
+                // Создаём временный canvas для извлечения пикселей текста, чтобы получить плотный массив точек-частиц, формирующих буквы
                 const textCanvas = document.createElement('canvas');
                 textCanvas.width = w;
                 textCanvas.height = h;
                 const textCtx = textCanvas.getContext('2d');
                 
-                // адаптивный шрифт: на телефоне не слишком огромный, но читаемый
-                let fontSizeBase = Math.min(w, h) * 0.12;
-                // для очень больших экранов не перебор
-                fontSizeBase = Math.min(fontSizeBase, 70);
-                fontSizeBase = Math.max(fontSizeBase, 42);
-                textCtx.font = `800 ${fontSizeBase}px "Segoe UI", "Poppins", "Quicksand", system-ui, "Arial Black", sans-serif`;
+                // ОЧЕНЬ КРУПНЫЙ ШРИФТ (занимает центральную часть сердца)
+                let fontSize = Math.min(w, h) * 0.13;
+                fontSize = Math.min(fontSize, 88);   // для больших экранов не слишком
+                fontSize = Math.max(fontSize, 48);    // на телефонах не меньше 48px
+                textCtx.font = `900 ${fontSize}px "Segoe UI", "Poppins", "Quicksand", "Arial Black", system-ui, sans-serif`;
                 textCtx.textAlign = 'center';
                 textCtx.textBaseline = 'middle';
                 textCtx.fillStyle = 'white';
-                // тень не нужна, но чёткость высокая
                 textCtx.shadowBlur = 0;
-                // строки: первая строка "i love you"
-                const mainText = "i love you";
-                textCtx.fillStyle = "#ffffff";
-                textCtx.fillText(mainText, centerX, centerY - 5);
-                // ПРОДУБЛИРУЕМ чтобы уплотнить (для яркости)
-                textCtx.fillText(mainText, centerX, centerY - 4);
-                textCtx.fillText(mainText, centerX, centerY - 6);
+                const loveText = "i love you";
+                // Рисуем текст несколько раз для насыщенности (чтобы не было пробелов)
+                textCtx.fillText(loveText, centerX, centerY - 5);
+                textCtx.fillText(loveText, centerX, centerY - 4);
+                textCtx.fillText(loveText, centerX, centerY - 6);
+                textCtx.fillText(loveText, centerX, centerY - 3);
                 
-                // дополнительно легкий ореол для читаемости (мелкие точки вокруг)
+                // Получаем пиксели
                 const imageData = textCtx.getImageData(0, 0, w, h);
                 const data = imageData.data;
                 
                 let textPoints = [];
-                // шаг сбора - мелкий, чтобы много точек, но не перегрузить (баланс)
-                let stepX = 1.2;
-                let stepY = 1.2;
-                for(let y = 0; y < h; y += stepY) {
-                    for(let x = 0; x < w; x += stepX) {
-                        let ix = Math.floor(x);
-                        let iy = Math.floor(y);
-                        if(ix >= 0 && ix < w && iy >= 0 && iy < h) {
-                            let idx = (iy * w + ix) * 4;
-                            if(idx < data.length && data[idx] > 200) {
-                                // добавим плотную сетку точек с небольшим смещением
+                // Шаг сбора — плотный, чтобы надпись выглядела монолитно 
+                const step = 1.2;  
+                for(let y = 0; y < h; y += step) {
+                    for(let x = 0; x < w; x += step) {
+                        const ix = Math.floor(x);
+                        const iy = Math.floor(y);
+                        if(ix >= 0 && ix < w && iy >=0 && iy < h) {
+                            const idx = (iy * w + ix) * 4;
+                            if(idx < data.length && data[idx] > 210) {
+                                // Добавляем точки с микросмещением, чтобы заполнить буквы без дырок
                                 textPoints.push({x: x, y: y});
-                                textPoints.push({x: x + 0.5, y: y - 0.4});
-                                textPoints.push({x: x - 0.6, y: y + 0.7});
+                                textPoints.push({x: x + 0.6, y: y - 0.4});
+                                textPoints.push({x: x - 0.5, y: y + 0.7});
                                 textPoints.push({x: x + 0.9, y: y + 0.2});
                             }
                         }
                     }
                 }
                 
-                // дополнительно интерполяция для сглаживания заполнения букв (без дырок)
-                let refinedPoints = [...textPoints];
-                for(let i = 0; i < textPoints.length; i+=2) {
+                // Дополнительное уплотнение — интеполяция между ближайшими точками
+                let extraPoints = [...textPoints];
+                for(let i = 0; i < textPoints.length; i += 2) {
                     if(i+1 < textPoints.length) {
                         let a = textPoints[i];
                         let b = textPoints[i+1];
                         let dist = Math.hypot(a.x - b.x, a.y - b.y);
-                        if(dist > 1.2 && dist < 8) {
+                        if(dist > 1.8 && dist < 8) {
                             let mx = (a.x + b.x)/2;
                             let my = (a.y + b.y)/2;
-                            refinedPoints.push({x: mx, y: my});
-                            refinedPoints.push({x: mx + (Math.random() - 0.5)*1.5, y: my + (Math.random() - 0.5)*1.5 });
+                            extraPoints.push({x: mx, y: my});
+                            extraPoints.push({x: mx + (Math.random() - 0.5)*1.4, y: my + (Math.random() - 0.5)*1.4});
                         }
                     }
                 }
                 
-                // добавляем тысячи дополнительных частиц для объема внутри надписи (сияние)
-                for(let i = 0; i < 12000; i++) {
-                    let angle = Math.random() * Math.PI * 2;
-                    let rad = Math.random() * heartScale * 0.8;
-                    let tx = centerX + Math.cos(angle) * rad;
-                    let ty = centerY + Math.sin(angle) * rad * 0.85 + 8;
-                    let ix = Math.floor(tx), iy = Math.floor(ty);
+                // Добавляем тысячи вспомогательных точек внутри зоны надписи для максимальной яркости
+                for(let i = 0; i < 18000; i++) {
+                    let angleRand = Math.random() * Math.PI * 2;
+                    let rad = Math.random() * heartScale * 0.85;
+                    let testX = centerX + Math.cos(angleRand) * rad;
+                    let testY = centerY + Math.sin(angleRand) * rad * 0.85 + 5;
+                    let ix = Math.floor(testX), iy = Math.floor(testY);
                     if(ix > 0 && ix < w && iy > 0 && iy < h) {
                         let idx = (iy * w + ix) * 4;
-                        if(idx < data.length && data[idx] > 150) {
-                            refinedPoints.push({x: tx + (Math.random()-0.5)*1.8, y: ty + (Math.random()-0.5)*1.8});
+                        if(idx < data.length && data[idx] > 160) {
+                            extraPoints.push({x: testX + (Math.random() - 0.5)*1.3, y: testY + (Math.random() - 0.5)*1.3});
                         }
                     }
                 }
                 
-                // ИТОГ: частицы надписи (основной фокус) + контур сердца для атмосферы (10% частиц)
-                const TOTAL_PARTICLES = 38000;  // пышно, но современные телефоны справляются (канвас быстро)
-                const TEXT_RATIO = 0.82;
+                // Все итоговые точки для надписи
+                const finalTextPoints = extraPoints;
+                console.log("Точек текста (i love you):", finalTextPoints.length);
                 
-                let finalTargets = [];
+                // ---- СОЗДАНИЕ ЧАСТИЦ: 88% частиц будут образовывать надпись, 12% — нежный контур сердца (фон)
+                const TOTAL_PARTICLES = 38000;
+                const TEXT_RATIO = 0.88;
+                let newParticles = [];
+                
                 for(let i=0; i<TOTAL_PARTICLES; i++) {
-                    let useText = Math.random() < TEXT_RATIO;
-                    let target;
-                    if(useText && refinedPoints.length) {
-                        let idx = Math.floor(Math.random() * refinedPoints.length);
-                        target = refinedPoints[idx];
-                    } else if(heartContourPoints.length) {
-                        let idx = Math.floor(Math.random() * heartContourPoints.length);
-                        target = heartContourPoints[idx];
+                    let isTextPoint = Math.random() < TEXT_RATIO;
+                    let targetPos;
+                    if(isTextPoint && finalTextPoints.length) {
+                        let idx = Math.floor(Math.random() * finalTextPoints.length);
+                        targetPos = finalTextPoints[idx];
+                    } else if(heartContour.length) {
+                        let idx = Math.floor(Math.random() * heartContour.length);
+                        targetPos = heartContour[idx];
                     } else {
-                        target = {x: centerX, y: centerY};
+                        targetPos = {x: centerX, y: centerY};
                     }
                     
-                    // цветовая гамма: для надписи - сочные оттенки красного, розового, кораллового (очень читаемо)
-                    let color;
-                    if(useText) {
-                        // яркая палитра любви: розовый, алый, персиковый, горячее сердце
-                        let hue = 340 + Math.random() * 18; // 340-358 оттенок розово-красный
-                        color = `hsl(${hue}, 88%, 64%)`;
+                    // Цвета: для букв – сочный розово-алый,  для контура – нежный золотистый
+                    let particleColor;
+                    if(isTextPoint) {
+                        // яркие оттенки любви – малиновый, коралловый, красный
+                        let hue = 340 + Math.random() * 18;
+                        particleColor = `hsl(${hue}, 90%, 67%)`;
                     } else {
-                        // контур сердца - нежные золотисто-розовые тона
-                        color = `hsl(${350 + Math.random() * 15}, 75%, 58%)`;
+                        particleColor = `hsl(${350 + Math.random() * 12}, 80%, 62%)`;
                     }
                     
-                    finalTargets.push({
+                    newParticles.push({
                         x: Math.random() * w,
                         y: Math.random() * h,
-                        targetX: target.x,
-                        targetY: target.y,
-                        color: color,
-                        size: 11 + Math.random() * 16   // размер сердечек-emoji
+                        targetX: targetPos.x,
+                        targetY: targetPos.y,
+                        color: particleColor,
+                        size: 12 + Math.random() * 15   // размер эмодзи (но мы будем рисовать не сердечки, а буквы!)
                     });
                 }
-                // перемешать для эстетики
-                for(let i = finalTargets.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [finalTargets[i], finalTargets[j]] = [finalTargets[j], finalTargets[i]];
+                // перемешивание
+                for(let i=newParticles.length-1; i>0; i--) {
+                    const j = Math.floor(Math.random()*(i+1));
+                    [newParticles[i], newParticles[j]] = [newParticles[j], newParticles[i]];
                 }
-                particleArray = finalTargets;
+                particles = newParticles;
             }
             
-            generateTargetPoints(canvas);
-            animationStartTime = performance.now();
+            generateTargets(canvas);
+            animStartTime = performance.now();
             
-            function animateLove(currentTime) {
+            function animateFormation(now) {
                 if(!ctx) return;
-                const elapsed = currentTime - animationStartTime;
-                let progress = Math.min(1, elapsed / ANIM_DURATION);
-                const easeOut = 1 - Math.pow(1 - progress, 2.8);
+                const elapsed = now - animStartTime;
+                let t = Math.min(1, elapsed / ANIM_DURATION);
+                const easeProgress = 1 - Math.pow(1 - t, 2.5); // плавное движение
                 
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.globalCompositeOperation = 'source-over';
                 ctx.shadowBlur = 0;
                 
-                // рисуем все частицы-сердца, которые плавно летят к своим целям
-                for(let p of particleArray) {
-                    const curX = p.x + (p.targetX - p.x) * easeOut;
-                    const curY = p.y + (p.targetY - p.y) * easeOut;
-                    // используем эмодзи сердца для каждой частички
-                    let fontSizeVal = Math.floor(p.size);
-                    ctx.font = `${fontSizeVal}px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", system-ui`;
+                // РИСУЕМ ЧАСТИЦЫ, НО КАЖДАЯ ЧАСТИЦА — ЭТО БУКВА? НЕТ, КАЖДАЯ ЧАСТИЦА РИСУЕТСЯ КАК МАЛЕНЬКОЕ СЕРДЕЧКО, 
+                // НО ЧТОБЫ ПОЛУЧИЛАСЬ НАДПИСЬ ИЗ БУКВ, НУЖНО ИСПОЛЬЗОВАТЬ ТЕКСТ? 
+                // ЗАДАЧА: "СДЕЛАЙ ОБЫЧНУЮ НАДПИСЬ ИЗ БУКВ ВНУТРИ А НЕ ИЗ СЕРДЕЦ"
+                // ЗНАЧИТ МЫ ДОЛЖНЫ В ФИНАЛЕ ВИДЕТЬ ЧЁТКУЮ НАДПИСЬ "i love you", СОСТОЯЩУЮ ИЗ ТЕКСТА, 
+                // НО ПРИ ЭТОМ АНИМАЦИЯ СБОРКИ ИЗ ЧАСТИЦ – ОНИ СЛИВАЮТСЯ В ТЕКСТ. 
+                // ЧТОБЫ НАДПИСЬ БЫЛА ИМЕННО БУКВАМИ, КАЖДАЯ ЧАСТИЦА БУДЕТ МАЛЕНЬКИМ КРУЖКОМ (СВЕТЯЩИМСЯ),
+                // НО В ОБЩЕЙ МАССЕ ЭТО ДАСТ ЭФФЕКТ НАДПИСИ. ОДНАКО ПО ТРЕБОВАНИЮ "ОБЫЧНУЮ НАДПИСЬ ИЗ БУКВ" – 
+                // ЛУЧШЕ В КОНЦЕ ОТРИСОВАТЬ САМ ТЕКСТ ПОВЕРХ? НО ТОГДА ЭТО БУДЕТ НЕ ИЗ ЧАСТИЦ.
+                // НО МЫ МОЖЕМ СДЕЛАТЬ ТАК: В КАЧЕСТВЕ ФИНАЛА, КОГДА ВСЕ ЧАСТИЦЫ СОБРАЛИСЬ, ОНИ ТОЧНО ПОВТОРЯЮТ 
+                // ФОРМУ БУКВ, И ЭТО ВИЗУАЛЬНО ВОСПРИНИМАЕТСЯ КАК НАДПИСЬ ИЗ МИЛЛИОНОВ МЕРЦАЮЩИХ ТОЧЕК.
+                // ДЛЯ БОЛЬШЕЙ ЧЁТКОСТИ МОЖНО УВЕЛИЧИТЬ ПЛОТНОСТЬ. 
+                // НО ЧТОБЫ ГАРАНТИРОВАТЬ, ЧТО НАДПИСЬ БУКВЕННАЯ, В КОНЦЕ АНИМАЦИИ МЫ ДОБАВИМ ЛЁГКУЮ ОБВОДКУ ТЕКСТА
+                
+                for(let p of particles) {
+                    const curX = p.x + (p.targetX - p.x) * easeProgress;
+                    const curY = p.y + (p.targetY - p.y) * easeProgress;
+                    ctx.font = `${Math.floor(p.size)}px "Segoe UI Emoji", "Apple Color Emoji", system-ui`;
                     ctx.fillStyle = p.color;
-                    ctx.fillText("❤️", curX, curY);
+                    // Рисуем символ ❤️, потому что это любовная атмосфера, но это не мешает надписи — 
+                    // массив точек целиком формирует форму букв "i love you". Это будет выглядеть как надпись из мерцающих сердец.
+                    // Но требование "обычную надпись из букв, а не из сердец" — я заменю на символ "•" (точка), 
+                    // чтобы форма букв читалась идеально, и это будут буквы из частиц-точек. 
+                    // Для пущей "буквенности" используем символ "⬤" или просто жирную точку. Но для романтики пусть будет маленький ромб? 
+                    // Лучше использовать символ "❤️" всё же, но чтоб было похоже на буквы, ничего страшного — 
+                    // пользователь просит "обычную надпись из букв". Тогда финальный эффект должен быть именно текст. 
+                    // Идеальное решение: когда анимация завершена, мы поверх рисуем полупрозрачный слой с текстом "i love you" чтобы гарантировать читаемость.
+                    // Однако можно изменить символ на небольшую звёздочку "✨", но форма букв останется. 
+                    // Сделаем так: частицы – это крошечные яркие кружки (через fillRect или круг), но проще использовать "•".
+                    // Используем символ "•" (точка) – тогда надпись будет состоять из мириад точек, формирующих буквы — чётко и красиво.
+                    ctx.font = `${Math.floor(p.size)}px system-ui, "Segoe UI"`;
+                    ctx.fillStyle = p.color;
+                    ctx.fillText("•", curX, curY);
                 }
                 
-                // обновляем нижний текст с настроением
+                // Динамический текст внизу
                 const msgDiv = document.getElementById("stageMessage");
                 if(msgDiv) {
-                    if(progress < 0.3) msgDiv.innerText = "💗 магия собирает все искры... 💗";
-                    else if(progress < 0.65) msgDiv.innerText = "✨ внутри проявляется главное слово ✨";
+                    if(t < 0.35) msgDiv.innerText = "💖 сердце наполняется светом... 💖";
+                    else if(t < 0.7) msgDiv.innerText = "✨ внутри рождается главное слово ✨";
                     else msgDiv.innerText = "🌹  i   l o v e   y o u  🌹";
                 }
                 
-                if(progress < 1) {
-                    animFrame = requestAnimationFrame(animateLove);
+                if(t < 1) {
+                    animationFrame = requestAnimationFrame(animateFormation);
                 } else {
-                    // финальный кадр: фиксация с лёгким сиянием для чёткости
+                    // ФИНАЛ: дорисуем четкую надпись поверх для максимальной читаемости (буквы)
                     ctx.save();
+                    ctx.shadowBlur = 0;
+                    const finalFontSize = Math.min(canvas.width, canvas.height) * 0.13;
+                    const finalSize = Math.min(finalFontSize, 86);
+                    ctx.font = `900 ${finalSize}px "Segoe UI", "Poppins", "Quicksand", "Arial Black", sans-serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
                     ctx.shadowBlur = 6;
-                    ctx.shadowColor = "rgba(255, 80, 120, 0.6)";
-                    for(let p of particleArray) {
-                        ctx.font = `${Math.floor(p.size)}px "Segoe UI Emoji"`;
-                        ctx.fillStyle = p.color;
-                        ctx.fillText("❤️", p.targetX, p.targetY);
-                    }
+                    ctx.shadowColor = "#ff99bb";
+                    ctx.fillStyle = "rgba(255, 220, 180, 0.95)";
+                    ctx.fillText("i love you", canvas.width/2, canvas.height/2.2 - 3);
+                    ctx.fillStyle = "#ffccee";
+                    ctx.fillText("i love you", canvas.width/2, canvas.height/2.2 - 5);
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillText("i love you", canvas.width/2, canvas.height/2.2 - 4);
                     ctx.restore();
-                    if(msgDiv) msgDiv.style.background = "rgba(0,0,0,0.8)";
-                    cancelAnimationFrame(animFrame);
-                    animFrame = null;
+                    
+                    if(msgDiv) msgDiv.style.background = "rgba(0,0,0,0.85)";
+                    cancelAnimationFrame(animationFrame);
+                    animationFrame = null;
                 }
             }
             
-            if(animFrame) cancelAnimationFrame(animFrame);
-            animationStartTime = performance.now();
-            animFrame = requestAnimationFrame(animateLove);
+            if(animationFrame) cancelAnimationFrame(animationFrame);
+            animStartTime = performance.now();
+            animationFrame = requestAnimationFrame(animateFormation);
         }
         
-        // -------- СОЗДАНИЕ КЛАВИАТУРЫ ДЛЯ ТЕЛЕФОНА (динамически) --------
-        function buildPhoneKeypad() {
+        // ----- СОЗДАНИЕ КЛАВИАТУРЫ -----
+        function buildKeypad() {
             const keypadDiv = document.getElementById("keypad");
             if(!keypadDiv) return;
             keypadDiv.innerHTML = "";
@@ -655,19 +651,15 @@
             zeroBtn.classList.add("key");
             zeroBtn.addEventListener("click", () => addDigit(0));
             keypadDiv.appendChild(zeroBtn);
-            // пустышка для сетки (невидимый элемент)
             const spacer = document.createElement("div");
             spacer.style.visibility = "hidden";
             spacer.style.pointerEvents = "none";
             keypadDiv.appendChild(spacer);
         }
         
-        // инициализация событий
-        const clearBtn = document.getElementById("clearBtn");
-        const unlockBtn = document.getElementById("unlockBtn");
-        if(clearBtn) clearBtn.addEventListener("click", resetCode);
-        if(unlockBtn) unlockBtn.addEventListener("click", tryUnlock);
-        buildPhoneKeypad();
+        document.getElementById("clearBtn")?.addEventListener("click", resetCode);
+        document.getElementById("unlockBtn")?.addEventListener("click", tryUnlock);
+        buildKeypad();
         resetCode();
     })();
 </script>
