@@ -307,7 +307,7 @@
             <button class="btn" id="unlockBtn">💖 ОТКРЫТЬ</button>
         </div>
         <div class="status-msg" id="statusMsg">
-            🔢 введи код
+            🔢 введи код 1 7 2
         </div>
     </div>
 </div>
@@ -358,7 +358,7 @@
         function resetCode() {
             enteredCode = "";
             updateDigitsUI();
-            statusDiv.innerText = "✨ сброшено → введи 172 ✨";
+            statusDiv.innerText = "✨ сброшено  ✨";
         }
         
         // визуальная ошибка + лёгкая тряска
@@ -369,7 +369,7 @@
                 setTimeout(() => slot.classList.remove('shake-error'), 300);
             });
             // также кратковременное изменение статуса
-            statusDiv.innerText = "❌ неверно! попробуй 172 ❌";
+            statusDiv.innerText = "❌ неверно!❌";
             setTimeout(() => {
                 if(enteredCode.length === 0) statusDiv.innerText = "✨ введи код любви ✨";
                 else statusDiv.innerText = `⭐ код: ${enteredCode.padEnd(3,'_')}`;
@@ -378,7 +378,7 @@
         
         function tryUnlock() {
             if(enteredCode.length !== 3) {
-                statusDiv.innerText = "⚠️ введи ровно 3 цифры (172)";
+                statusDiv.innerText = "⚠️ введи ровно 3 цифры";
                 wrongCodeAnimation(); // лёгкая подсказка
                 return;
             }
